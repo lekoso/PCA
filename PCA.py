@@ -13,9 +13,8 @@ def Analys(loc):
     np.set_printoptions(formatter={'float': '{: 0.8f}'.format})
     
     found = False
-
-    for f in os.listdir():
-        print(f)
+    
+    for f in os.listdir(loc):
         if 'input' in f:
             found = True
             os.path.abspath(loc)
@@ -50,10 +49,5 @@ def Analys(loc):
             result = pd.DataFrame(data=eigenVec, columns=hold, index=cov_data.index)
             #list = result.columns
             #result = result.reindex(columns=list)
-            #print(result)
             break
-    
-    if found == False:
-        print('Find Input Data')
-   
     return result
