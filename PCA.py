@@ -1,4 +1,5 @@
-#Routine to calculate Principal Component Analysis given data in an excel format with a tab named 'Prices'
+# Routine to calculate Principal Component Analysis 
+# given data in an excel format with a tab named 'Prices'
 
 def Analys(loc):
     import pandas as pd
@@ -10,15 +11,17 @@ def Analys(loc):
     pd.set_option('display.min_rows', 10)
     pd.set_option('display.max_columns', 100)
     np.set_printoptions(formatter={'float': '{: 0.8f}'.format})
-
-    #loc = os.getcwd()
+    
+    found = False
 
     for f in os.listdir():
+        print(f)
         if 'input' in f:
+            found = True
             os.path.abspath(loc)
             loca = os.path.join(loc,f)
             data = pd.read_excel(loca, sheet_name='Prices')
-            date = data['Date']
+            #date = data['Date']
 
             del data['Date']
 
@@ -49,7 +52,8 @@ def Analys(loc):
             #result = result.reindex(columns=list)
             #print(result)
             break
-        else:
-            print('Find Input Data')
-            break
+    
+    if found == False:
+        print('Find Input Data')
+   
     return result

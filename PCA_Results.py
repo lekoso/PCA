@@ -1,7 +1,9 @@
-import PCA
+import sys
 import os
+sys.path.append('A:\Lekan\Miscellaneous\python\modules')
+import PCA
 
-fil_loc = 'A:\Lekan\Miscellaneous\python\modules\PCA'
+fil_loc = input('A:\Lekan\Miscellaneous\python\modules')
 dt = PCA.Analys(fil_loc)
 
 res = os.path.join(fil_loc,'Result.xlsx')
