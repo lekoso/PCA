@@ -1,53 +1,14 @@
-# Routine to calculate Principal Component Analysis 
-# given data in an excel format with a tab named 'Prices'
+import sys
+import os
+sys.path.append('A:\Lekan\Miscellaneous\python\modules\PCA')
+import PCA_func
 
-def Analys(loc):
-    import pandas as pd
-    import numpy as np
-    import math as mh
-    import os
+fil_loc = 'A:\Lekan\Miscellaneous\python\modules\PCA'
 
-    pd.options.display.float_format = '{:.6f}'.format
-    pd.set_option('display.min_rows', 10)
-    pd.set_option('display.max_columns', 100)
-    np.set_printoptions(formatter={'float': '{: 0.8f}'.format})
-    
-    found = False
-    
-    for f in os.listdir(loc):
-        if 'input' in f:
-            found = True
-            os.path.abspath(loc)
-            loca = os.path.join(loc,f)
-            data = pd.read_excel(loca, sheet_name='Prices')
-            #date = data['Date']
-
-            del data['Date']
-
-            returns = np.log((data/data.shift(periods=1)))
-            returns = returns.dropna()
-
-            PL = data - data.shift(periods=1)
-            PL = PL.dropna()
-
-            cov_data = returns.cov()
-            corr_data = returns.corr()
-
-            #np.set_printoptions(precision=3)
-
-            eigen = np.linalg.eig(cov_data)
-            eigenVal = (np.array(eigen[0]).T)
-            eigenVec = (np.array(eigen[1]))
-
-            #Get percentage ranking of EigneValues
-            hold = []
-            for i in eigenVal:
-                val = i * 100 / eigenVal.sum()
-                hold.append(val)
-
-            #sort columns in terms of eigenValues    
-            result = pd.DataFrame(data=eigenVec, columns=hold, index=cov_data.index)
-            #list = result.columns
-            #result = result.reindex(columns=list)
-            break
-    return result
+try:
+    dt = PCA_func.PCA_Calc(fil_loc)
+    res = os.path.join(fil_loc,'Result.xlsx')
+    dt.to_excel(res, sheet_name='Result', index = True)
+    os.system(res)
+except:
+    print('Input Data possibly does not exist, or wrong directory')
